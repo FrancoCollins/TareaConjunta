@@ -306,6 +306,7 @@
             android:visibility="invisible" />
 
         <View
+
             android:visibility="invisible"
             android:id="@+id/barraInferiorEscondida"
             android:layout_width="fill_parent"
