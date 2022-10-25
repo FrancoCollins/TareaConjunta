@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tituloPedido;
     private View lineaSuperior;
     private View lineaInferior;
+    private HashMap<Double, CheckBox> valores;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         tituloPedido = findViewById(R.id.titulosDatosCompra);
         lineaInferior = findViewById(R.id.barraInferiorEscondida);
         lineaSuperior = findViewById(R.id.barraSuperiorEscondida);
-        HashMap<Double, CheckBox> valores = new HashMap<>();
+        valores = new HashMap<>();
         valores.put(1.5, tomate);
         valores.put(1.6, mozza);
         valores.put(1.8, emmen);
@@ -88,11 +88,32 @@ public class MainActivity extends AppCompatActivity {
             String recuperarDire = String.valueOf(direccion.getText());
             pedidoDireccion.setText(recuperarDire);
             pedidoDireccion.setVisibility(View.VISIBLE);
-            int id = tamano.getCheckedRadioButtonId();
-            View radioButton = tamano.findViewById(id);
-            int indice = tamano.indexOfChild(radioButton);
-            RadioButton rb = (RadioButton) tamano.getChildAt(indice);
-            double precio = 0;
+            double precio = comprobarTamano();
+            precio += sumarIngredientes();
+            mostrarPedido(precio);
+
+        });
+
+    }
+
+    private double sumarIngredientes() {
+        double ingredientes = 0;
+        for (Map.Entry<Double, CheckBox> entry : valores.entrySet()
+        ) {
+            if (entry.getValue().isChecked()) {
+                ingredientes += entry.getKey();
+            }
+        }
+        return ingredientes;
+    }
+
+    private double comprobarTamano() {
+        int id = tamano.getCheckedRadioButtonId();
+        View radioButton = tamano.findViewById(id);
+        int indice = tamano.indexOfChild(radioButton);
+        RadioButton rb = (RadioButton) tamano.getChildAt(indice);
+        double precio = 0;
+        if (rb != null) {
             if (rb.getText().equals("pequena")) {
                 precio = 5;
             } else if (rb.getText().equals("mediana")) {
@@ -100,21 +121,17 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 precio = 15;
             }
-            for (Map.Entry<Double, CheckBox> entry : valores.entrySet()
-            ) {
-                System.out.println(entry.getKey() + " " + entry.getValue().isChecked());
-                if (entry.getValue().isChecked()) {
-                    precio += entry.getKey();
-                }
-            }
-            precioTotal.setText(String.valueOf(String.format("%.2f", precio)) + "€");
-            etiquetaPrecio.setVisibility(View.VISIBLE);
-            etiquetaNombre.setVisibility(View.VISIBLE);
-            etiquetaDireccion.setVisibility(View.VISIBLE);
-            tituloPedido.setVisibility(View.VISIBLE);
-            lineaSuperior.setVisibility(View.VISIBLE);
-            lineaInferior.setVisibility(View.VISIBLE);
-        });
+        }
+        return precio;
+    }
 
+    private void mostrarPedido(double precio) {
+        precioTotal.setText(String.valueOf(String.format("%.2f", precio)) + "€");
+        etiquetaPrecio.setVisibility(View.VISIBLE);
+        etiquetaNombre.setVisibility(View.VISIBLE);
+        etiquetaDireccion.setVisibility(View.VISIBLE);
+        tituloPedido.setVisibility(View.VISIBLE);
+        lineaSuperior.setVisibility(View.VISIBLE);
+        lineaInferior.setVisibility(View.VISIBLE);
     }
 }

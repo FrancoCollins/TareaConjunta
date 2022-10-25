@@ -190,7 +190,7 @@
 
             <CheckBox
                 android:id="@+id/mozzarella"
-                android:layout_width="116dp"
+                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:fontFamily="serif-monospace"
@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:fontFamily="serif-monospace"
-                android:text="Emmental"
+                android:text="Jamon"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -226,7 +226,7 @@
 
             <CheckBox
                 android:id="@+id/pepperoni"
-                android:layout_width="109dp"
+                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:fontFamily="serif-monospace"
@@ -262,7 +262,7 @@
 
             <CheckBox
                 android:id="@+id/aceitunas"
-                android:layout_width="109dp"
+                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:fontFamily="serif-monospace"
@@ -288,7 +288,7 @@
             android:layout_width="383sp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:background="@color/black">
+            android:background="@color/verde_raro">
 
             <Button
                 android:id="@+id/realizarPedido"
