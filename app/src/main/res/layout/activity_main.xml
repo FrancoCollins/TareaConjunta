@@ -296,6 +296,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/verde_raro"
                 android:fontFamily="monospace"
+                android:textColor="@color/white"
                 android:text="Realizar pedido"
                 android:textAlignment="center" />
         </LinearLayout>

@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         valores.put(2.15, pina);
         valores.put(2.25, aceituna);
         valores.put(2.75, berenjena);
-        calcularPedido.setBackgroundColor(8396569);
 
         calcularPedido.setOnClickListener(view -> {
             String recuperarNombre = String.valueOf(nombre.getText());
@@ -89,7 +88,11 @@ public class MainActivity extends AppCompatActivity {
             pedidoDireccion.setText(recuperarDire);
             pedidoDireccion.setVisibility(View.VISIBLE);
             double precio = comprobarTamano();
-            precio += sumarIngredientes();
+            if (precio > 0) {
+                precio += sumarIngredientes();
+            } else {
+                precioTotal.setText("por favor elija el tamaño de la pizza para poder calcular el precio");
+            }
             mostrarPedido(precio);
 
         });
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         RadioButton rb = (RadioButton) tamano.getChildAt(indice);
         double precio = 0;
         if (rb != null) {
-            if (rb.getText().equals("pequena")) {
+            if (rb.getText().equals("pequeña")) {
                 precio = 5;
             } else if (rb.getText().equals("mediana")) {
                 precio = 10;
@@ -126,7 +129,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarPedido(double precio) {
-        precioTotal.setText(String.valueOf(String.format("%.2f", precio)) + "€");
+        if (precio > 0) {
+            precioTotal.setText(String.valueOf(String.format("%.2f", precio)) + "€");
+        }
         etiquetaPrecio.setVisibility(View.VISIBLE);
         etiquetaNombre.setVisibility(View.VISIBLE);
         etiquetaDireccion.setVisibility(View.VISIBLE);
