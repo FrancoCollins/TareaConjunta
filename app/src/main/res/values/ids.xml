@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Este fichero lo podemos crear pulsando boton derecho sobre la carpeta values
+        y eligiendo -> new | values resource file
+    -->
+    <item name="botonIniciar" type="id" />
+    <item name="labelInicioSesion" type="id" />
+    <item name="labelPass" type="id" />
+    <item name="textoPass" type="id" />
+    <item name="texto1" type="id" />
+    <item name="mensajeEmergente" type="id"/>
+</resources>

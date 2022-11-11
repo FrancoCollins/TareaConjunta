@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    tools:context=".MainActivity_Login">
+
+    <!-- Este fichero contiene todos los elemenentos que seran mostrados al usuario
+    para que interaccione con nuestra aplicacion
+
+    Seria equivalente al HTML en un mundo web o como el ContentPanel de Swing
+
+    Normalmente cada fichero XML esta asociado con una actividad
+
+    Todas las etiquetas que pongamos en este fichero se acabaran convirtiendo
+    en objetos Java. Ej: la etiqueta Button acabará siendo un objeto de tipo Button
+    Además todos estos objetos tendrán una estructura de tipo arbol (como el arbol
+    DOM de HTML)
+
+    La manera que colocara Android los objetos a la vista de nuestros usuarios
+    dependera del layout que estamos usando. Este es el LinearLayout que basicamente
+    coloca los objetos visuales de arriba a abajo
+    -->
+
+    <!--
+        La etiqueta  TextView sirve para mostrar información al usuario
+
+        Todos los componentes tiene un ancho y un alto que se puede dar en distintas
+        unidades. Pero tambien es muy habitual usar dos constantes:
+
+        1- wrap_content -> La longitud sera igual al tamaño del contenido de la caja
+        2- match_parent -> La longitud sera igual al tamaño del objeto padre. En versiones
+        antiguas de Android se llamaba "fill_parent"
+
+        Para poner un identificador (id) tenemos que tenerlo en una carpeta de
+        recursos, en mi caso he creado el fichero "id.xml" dentro de la carpeta "values"
+
+    -->
+    <TextView
+        android:id="@id/texto1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="INICIO DE SESION"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!--
+        Esta etiqueta sirve para mostrar un boton al usuario
+
+        Podemos acceder a los componentes visuales desde la actividad que tenemos
+        asociada con el xml. Normalmente lo haremos a traves de la propiedad "id"
+     -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/labelInicioSesion"
+            android:layout_width="156dp"
+            android:layout_height="45dp"
+            android:text="Usuario: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/textoInicioSesion"
+            android:layout_width="223dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/labelPass"
+            android:layout_width="156dp"
+            android:layout_height="45dp"
+            android:text="Contraseña: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/textoPass"
+            android:layout_width="223dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botonIniciar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="cambiarTexto"
+        android:text="Iniciar Sesion" />
+
+    <TextView
+        android:layout_marginTop="29sp"
+        android:id="@+id/mensajeEmergente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="usuario incorrecto"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+    <!-- Si ponenemos el id con "@+id/" no hace falta crearlo en ningun fichero
+    de recursos.
+
+    Con el atributo inputType podemos establecer el teclado que nos aparezca por defecto,
+    en este caso solo numerico
+
+    Con hint hacemos que aparezca un texto que desaparecera cuando tenga el foco
+    -->
+
+</LinearLayout>

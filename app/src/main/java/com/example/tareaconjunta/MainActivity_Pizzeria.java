@@ -2,8 +2,7 @@ package com.example.tareaconjunta;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,26 +13,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity_Pizzeria extends AppCompatActivity {
 
-    private Button calcularPedido;
     private EditText direccion;
     private EditText nombre;
     private RadioGroup tamano;
     private TextView pedidoNombre;
     private TextView pedidoDireccion;
     private TextView precioTotal;
-    private CheckBox tomate;
-    private CheckBox mozza;
-    private CheckBox emmen;
-    private CheckBox atun;
-    private CheckBox berenjena;
-    private CheckBox salmon;
-    private CheckBox pina;
-    private CheckBox pepperoni;
-    private CheckBox aceituna;
     private TextView etiquetaNombre;
     private TextView etiquetaDireccion;
     private TextView etiquetaPrecio;
@@ -46,17 +36,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        pina = findViewById(R.id.pina);
-        tomate = findViewById(R.id.tomate);
-        mozza = findViewById(R.id.mozzarella);
-        emmen = findViewById(R.id.emmental);
-        aceituna = findViewById(R.id.aceitunas);
-        atun = findViewById(R.id.atun);
-        berenjena = findViewById(R.id.berenjena);
-        salmon = findViewById(R.id.salmon);
-        pepperoni = findViewById(R.id.pepperoni);
-        calcularPedido = findViewById(R.id.realizarPedido);
+        Intent intent = new Intent(MainActivity_Pizzeria.this, MainActivity_Pedido.class);
+        setContentView(R.layout.activity_main_pizzeria);
+        CheckBox pina = findViewById(R.id.pina);
+        CheckBox tomate = findViewById(R.id.tomate);
+        CheckBox mozza = findViewById(R.id.mozzarella);
+        CheckBox emmen = findViewById(R.id.emmental);
+        CheckBox aceituna = findViewById(R.id.aceitunas);
+        CheckBox atun = findViewById(R.id.atun);
+        CheckBox berenjena = findViewById(R.id.berenjena);
+        CheckBox salmon = findViewById(R.id.salmon);
+        CheckBox pepperoni = findViewById(R.id.pepperoni);
+        Button calcularPedido = findViewById(R.id.realizarPedido);
         direccion = findViewById(R.id.entradaDireccion);
         nombre = findViewById(R.id.entradaNombre);
         pedidoDireccion = findViewById(R.id.salidaDireccion);
@@ -79,38 +70,44 @@ public class MainActivity extends AppCompatActivity {
         valores.put(2.15, pina);
         valores.put(2.25, aceituna);
         valores.put(2.75, berenjena);
+        Usuario usuario = (Usuario) getIntent().getSerializableExtra("Objeto");
+        nombre.setText(usuario.getUsuario());
 
         calcularPedido.setOnClickListener(view -> {
+            Pizza pizza = new Pizza();
             String recuperarNombre = String.valueOf(nombre.getText());
             pedidoNombre.setText(recuperarNombre);
             pedidoNombre.setVisibility(View.VISIBLE);
             String recuperarDire = String.valueOf(direccion.getText());
             pedidoDireccion.setText(recuperarDire);
             pedidoDireccion.setVisibility(View.VISIBLE);
-            double precio = comprobarTamano();
+            double precio = comprobarTamano(pizza);
             if (precio > 0) {
-                precio += sumarIngredientes();
+                precio += sumarIngredientes(pizza);
             } else {
-                precioTotal.setText("por favor elija el tamaño de la pizza para poder calcular el precio");
+                precioTotal.setText(R.string.faltaIngrediente);
             }
+            intent.putExtra("precio", precio);
+            intent.putExtra("Pizza", pizza);
             mostrarPedido(precio);
 
         });
 
     }
 
-    private double sumarIngredientes() {
+    private double sumarIngredientes(Pizza pizza) {
         double ingredientes = 0;
         for (Map.Entry<Double, CheckBox> entry : valores.entrySet()
         ) {
             if (entry.getValue().isChecked()) {
                 ingredientes += entry.getKey();
+                pizza.getIngredientes().put(String.valueOf(entry.getValue().getText()), entry.getKey());
             }
         }
         return ingredientes;
     }
 
-    private double comprobarTamano() {
+    private double comprobarTamano(Pizza pizza) {
         int id = tamano.getCheckedRadioButtonId();
         View radioButton = tamano.findViewById(id);
         int indice = tamano.indexOfChild(radioButton);
@@ -119,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
         if (rb != null) {
             if (rb.getText().equals("pequeña")) {
                 precio = 5;
+                pizza.setPrecioTamano(precio);
             } else if (rb.getText().equals("mediana")) {
                 precio = 10;
+                pizza.setPrecioTamano(precio);
             } else {
+                pizza.setPrecioTamano(precio);
                 precio = 15;
             }
         }
@@ -129,9 +129,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarPedido(double precio) {
-        if (precio > 0) {
-            precioTotal.setText(String.valueOf(String.format("%.2f", precio)) + "€");
-        }
+        String error = String.format(Locale.ENGLISH, "%.2f", precio);
+        if (precio > 0) precioTotal.setText(error);
         etiquetaPrecio.setVisibility(View.VISIBLE);
         etiquetaNombre.setVisibility(View.VISIBLE);
         etiquetaDireccion.setVisibility(View.VISIBLE);
