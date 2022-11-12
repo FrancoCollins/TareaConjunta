@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,22 +22,12 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
     private EditText direccion;
     private EditText nombre;
     private RadioGroup tamano;
-    private TextView pedidoNombre;
-    private TextView pedidoDireccion;
-    private TextView precioTotal;
-    private TextView etiquetaNombre;
-    private TextView etiquetaDireccion;
-    private TextView etiquetaPrecio;
-    private TextView tituloPedido;
-    private View lineaSuperior;
-    private View lineaInferior;
     private HashMap<Double, CheckBox> valores;
-
+    private TextView valor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(MainActivity_Pizzeria.this, MainActivity_Pedido.class);
         setContentView(R.layout.activity_main_pizzeria);
         CheckBox pina = findViewById(R.id.pina);
         CheckBox tomate = findViewById(R.id.tomate);
@@ -48,18 +39,12 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
         CheckBox salmon = findViewById(R.id.salmon);
         CheckBox pepperoni = findViewById(R.id.pepperoni);
         Button calcularPedido = findViewById(R.id.realizarPedido);
+        valor = findViewById(R.id.etiquetaOculta);
         direccion = findViewById(R.id.entradaDireccion);
         nombre = findViewById(R.id.entradaNombre);
-        pedidoDireccion = findViewById(R.id.salidaDireccion);
-        pedidoNombre = findViewById(R.id.salidaNombre);
-        precioTotal = findViewById(R.id.salidaPrecio);
+
         tamano = findViewById(R.id.radioGroup);
-        etiquetaDireccion = findViewById(R.id.labelSalidaD);
-        etiquetaNombre = findViewById(R.id.labelSalidaN);
-        etiquetaPrecio = findViewById(R.id.labelSalidaP);
-        tituloPedido = findViewById(R.id.titulosDatosCompra);
-        lineaInferior = findViewById(R.id.barraInferiorEscondida);
-        lineaSuperior = findViewById(R.id.barraSuperiorEscondida);
+
         valores = new HashMap<>();
         valores.put(1.5, tomate);
         valores.put(1.6, mozza);
@@ -74,23 +59,26 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
         nombre.setText(usuario.getUsuario());
 
         calcularPedido.setOnClickListener(view -> {
+            Log.d("MainActivity_Pizzeria", "Pasando a la siguiente actividad");
+            Intent intent = new Intent(MainActivity_Pizzeria.this, MainActivity_Pedido.class);
             Pizza pizza = new Pizza();
             String recuperarNombre = String.valueOf(nombre.getText());
-            pedidoNombre.setText(recuperarNombre);
-            pedidoNombre.setVisibility(View.VISIBLE);
             String recuperarDire = String.valueOf(direccion.getText());
-            pedidoDireccion.setText(recuperarDire);
-            pedidoDireccion.setVisibility(View.VISIBLE);
             double precio = comprobarTamano(pizza);
             if (precio > 0) {
+                pizza.setPrecioTamano(precio);
                 precio += sumarIngredientes(pizza);
+                intent.putExtra("nombre", recuperarNombre);
+                intent.putExtra("direccion", recuperarDire);
+                intent.putExtra("precio", precio);
+                intent.putExtra("Pizza", pizza);
+                intent.putExtra("usuario", usuario);
+                valor.setVisibility(View.INVISIBLE);
+                startActivity(intent);
             } else {
-                precioTotal.setText(R.string.faltaIngrediente);
+                valor.setText("Ingrese datos para calcular el valor de la pizza");
+                valor.setVisibility(View.VISIBLE);
             }
-            intent.putExtra("precio", precio);
-            intent.putExtra("Pizza", pizza);
-            mostrarPedido(precio);
-
         });
 
     }
@@ -128,14 +116,4 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
         return precio;
     }
 
-    private void mostrarPedido(double precio) {
-        String error = String.format(Locale.ENGLISH, "%.2f", precio);
-        if (precio > 0) precioTotal.setText(error);
-        etiquetaPrecio.setVisibility(View.VISIBLE);
-        etiquetaNombre.setVisibility(View.VISIBLE);
-        etiquetaDireccion.setVisibility(View.VISIBLE);
-        tituloPedido.setVisibility(View.VISIBLE);
-        lineaSuperior.setVisibility(View.VISIBLE);
-        lineaInferior.setVisibility(View.VISIBLE);
-    }
 }

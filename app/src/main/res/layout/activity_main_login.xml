@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/rojo_oscuro"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
@@ -41,15 +42,23 @@
         recursos, en mi caso he creado el fichero "id.xml" dentro de la carpeta "values"
 
     -->
-    <TextView
-        android:id="@id/texto1"
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="INICIO DE SESION"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:background="@color/verde_raro">
+
+        <TextView
+            android:id="@id/texto1"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="INICIO DE SESION"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!--
         Esta etiqueta sirve para mostrar un boton al usuario
@@ -68,13 +77,15 @@
             android:layout_width="156dp"
             android:layout_height="45dp"
             android:text="Usuario: "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/textoInicioSesion"
             android:layout_width="223dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo_oscuro"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -88,14 +99,16 @@
             android:layout_width="156dp"
             android:layout_height="45dp"
             android:text="Contraseña: "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/textoPass"
             android:layout_width="223dp"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:backgroundTint="@color/rojo_oscuro"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -104,26 +117,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="cambiarTexto"
-        android:text="Iniciar Sesion" />
+        android:text="Iniciar Sesion"
+        android:textColor="@color/white" />
 
     <TextView
-        android:layout_marginTop="29sp"
         android:id="@+id/mensajeEmergente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="29sp"
         android:text="usuario incorrecto"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         android:visibility="invisible" />
-    <!-- Si ponenemos el id con "@+id/" no hace falta crearlo en ningun fichero
-    de recursos.
 
-    Con el atributo inputType podemos establecer el teclado que nos aparezca por defecto,
-    en este caso solo numerico
-
-    Con hint hacemos que aparezca un texto que desaparecera cuando tenga el foco
-    -->
 
 </LinearLayout>

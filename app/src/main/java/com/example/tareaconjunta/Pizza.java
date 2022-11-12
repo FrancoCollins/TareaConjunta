@@ -10,6 +10,10 @@ public class Pizza implements Serializable {
     private double precioTamano;
     private double precioTotal;
 
+    public Pizza() {
+        this.ingredientes = new HashMap<>();
+    }
+
     public HashMap<String, Double> getIngredientes() {
         return ingredientes;
     }

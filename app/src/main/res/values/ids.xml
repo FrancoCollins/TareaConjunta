@@ -10,4 +10,5 @@
     <item name="textoPass" type="id" />
     <item name="texto1" type="id" />
     <item name="mensajeEmergente" type="id"/>
+    <item name="etiquetaOculta" type="id"/>
 </resources>
