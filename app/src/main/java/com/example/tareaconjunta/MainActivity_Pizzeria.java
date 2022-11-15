@@ -24,6 +24,7 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
     private RadioGroup tamano;
     private HashMap<Double, CheckBox> valores;
     private TextView valor;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
         valores.put(2.15, pina);
         valores.put(2.25, aceituna);
         valores.put(2.75, berenjena);
-        Usuario usuario = (Usuario) getIntent().getSerializableExtra("Objeto");
+        usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         nombre.setText(usuario.getUsuario());
 
         calcularPedido.setOnClickListener(view -> {

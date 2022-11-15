@@ -54,7 +54,7 @@ public class MainActivity_Login extends AppCompatActivity {
                     Usuario usuarioObj = new Usuario(usuario, pass);
                     intent.putExtra("Usuario", usuario);
                     intent.putExtra("Password", pass);
-                    intent.putExtra("Objeto", usuarioObj);
+                    intent.putExtra("usuario", usuarioObj);
                     startActivity(intent);
                 } else {
                     System.out.println(usuario + " " + pass);
