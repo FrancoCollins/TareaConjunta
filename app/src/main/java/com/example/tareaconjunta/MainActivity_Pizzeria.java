@@ -58,6 +58,7 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
         valores.put(2.75, berenjena);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         nombre.setText(usuario.getUsuario());
+        direccion.setText(usuario.getDireccion());
 
         calcularPedido.setOnClickListener(view -> {
             Log.d("MainActivity_Pizzeria", "Pasando a la siguiente actividad");

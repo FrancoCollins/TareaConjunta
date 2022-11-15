@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity_Login extends AppCompatActivity {
 
 
@@ -20,12 +22,20 @@ public class MainActivity_Login extends AppCompatActivity {
     private TextView mensajeEmergente;
     private EditText textoPasssword;
     private EditText textoUsuario;
+    private ArrayList<Usuario> usuariosRegistrados;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
+        usuariosRegistrados = new ArrayList<>();
+        usuariosRegistrados.add(new Usuario("Franco", "admin", "casa"));
+        usuariosRegistrados.add(new Usuario("Pepe", "admin1", "casa mia"));
+        usuariosRegistrados.add(new Usuario("Federico", "admin2","donde vivo?"));
+        usuariosRegistrados.add(new Usuario("Felipe", "admin3" , "paseo de eso"));
+        usuariosRegistrados.add(new Usuario("Facundo1", "admin4", "programar me gusta"));
+        usuariosRegistrados.add(new Usuario("admin", "admin", "direccion"));
 
         botonPulsame = findViewById(R.id.botonIniciar);
         textoUsuario = findViewById(R.id.textoInicioSesion);
@@ -46,21 +56,28 @@ public class MainActivity_Login extends AppCompatActivity {
 
                 String usuario = String.valueOf(textoUsuario.getText());
                 String pass = String.valueOf(textoPasssword.getText());
+                boolean correcto = false;
 
-                if (usuario.equals("Franco") && pass.equals("123")) {
-                    mensajeEmergente.setText("Credenciales correctas, pasamos a iniciar sesion");
-                    mensajeEmergente.setTextColor(Color.GREEN);
-                    mensajeEmergente.setVisibility(View.VISIBLE);
-                    Usuario usuarioObj = new Usuario(usuario, pass);
-                    intent.putExtra("Usuario", usuario);
-                    intent.putExtra("Password", pass);
-                    intent.putExtra("usuario", usuarioObj);
-                    startActivity(intent);
-                } else {
-                    System.out.println(usuario + " " + pass);
-                    mensajeEmergente.setText("Credenciales incorrectas incorrectas");
-                    mensajeEmergente.setTextColor(Color.RED);
-                    mensajeEmergente.setVisibility(View.VISIBLE);
+                for (Usuario usuarioRegistrado : usuariosRegistrados) {
+                    if (usuarioRegistrado.getUsuario().equals(usuario) && usuarioRegistrado.getPassword().equals(pass)) {
+                        mensajeEmergente.setText("Credenciales correctas, pasamos a iniciar sesion");
+                        String direccion = usuarioRegistrado.getDireccion();
+                        mensajeEmergente.setTextColor(Color.GREEN);
+                        mensajeEmergente.setVisibility(View.VISIBLE);
+                        Usuario usuarioObj = new Usuario(usuario, pass, direccion);
+                        intent.putExtra("Usuario", usuario);
+                        intent.putExtra("Password", pass);
+                        intent.putExtra("direccion", usuarioRegistrado.getDireccion());
+                        intent.putExtra("usuario", usuarioObj);
+                        startActivity(intent);
+                        correcto = true;
+                    }
+                    if(!correcto){
+                        System.out.println(usuario + " " + pass);
+                        mensajeEmergente.setText("Credenciales incorrectas incorrectas");
+                        mensajeEmergente.setTextColor(Color.RED);
+                        mensajeEmergente.setVisibility(View.VISIBLE);
+                    }
                 }
 
 
