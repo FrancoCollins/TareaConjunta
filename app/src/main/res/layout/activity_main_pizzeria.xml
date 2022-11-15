@@ -306,6 +306,9 @@
             android:id="@+id/etiquetaOculta"
             android:layout_width="match_parent"
             android:layout_height="567dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textAlignment="center"
             android:text="@string/ingrese_un_valor_por_favor"
             android:visibility="invisible" />
 

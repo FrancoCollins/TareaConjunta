@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -67,18 +68,26 @@ public class MainActivity_Pizzeria extends AppCompatActivity {
             String recuperarNombre = String.valueOf(nombre.getText());
             String recuperarDire = String.valueOf(direccion.getText());
             double precio = comprobarTamano(pizza);
-            if (precio > 0) {
+            int dato = tamano.getCheckedRadioButtonId();
+            System.out.println(dato);
+            if (precio > 0 && dato != -1) {
                 pizza.setPrecioTamano(precio);
+                double aux = precio;
                 precio += sumarIngredientes(pizza);
-                intent.putExtra("nombre", recuperarNombre);
-                intent.putExtra("direccion", recuperarDire);
-                intent.putExtra("precio", precio);
-                intent.putExtra("Pizza", pizza);
-                intent.putExtra("usuario", usuario);
-                valor.setVisibility(View.INVISIBLE);
-                startActivity(intent);
+                if (aux == precio) {
+                    valor.setText("Rellene todos los campos para calcular el valor de la pizza");
+                    valor.setVisibility(View.VISIBLE);
+                } else {
+                    intent.putExtra("nombre", recuperarNombre);
+                    intent.putExtra("direccion", recuperarDire);
+                    intent.putExtra("precio", precio);
+                    intent.putExtra("Pizza", pizza);
+                    intent.putExtra("usuario", usuario);
+                    valor.setVisibility(View.INVISIBLE);
+                    startActivity(intent);
+                }
             } else {
-                valor.setText("Ingrese datos para calcular el valor de la pizza");
+                valor.setText("Rellene todos los campos para calcular el valor de la pizza");
                 valor.setVisibility(View.VISIBLE);
             }
         });
